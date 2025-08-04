@@ -1,4 +1,4 @@
-export class EventEmitter {
+export class VEE {
     public _events: { [event: string]: Function[] } = {};
 
     /**
@@ -56,4 +56,9 @@ export class EventEmitter {
     public listenerCount(event: string): number {
         return this._events[event]?.length || 0;
     }
+}
+
+export default VEE;
+export {
+    VEE as EventEmitter
 }
