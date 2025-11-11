@@ -1,24 +1,41 @@
-export class VEE {
+type EventMap = {
+    [event: string]: (...args: any[]) => void;
+};
+
+type EventName<T extends EventMap> = keyof T | (string & {});
+
+type EventArgs<T extends EventMap, K extends EventName<T>> = K extends keyof T
+    ? Parameters<T[K]>
+    : any[];
+
+export class VEE<T extends EventMap = {}> {
     public _events: { [event: string]: Function[] } = {};
 
     /**
      * Registers an event listener
-     * @param {string} event - event name
+     * @param {K} event - event name
      * @param {Function} listener - function to be called when event occurs
      */
-    public on(event: string, listener: Function): void {
-        if (!this._events[event]) 
-            this._events[event] = [];
-        this._events[event].push(listener);
+    public on<K extends EventName<T>>(
+        event: K,
+        listener: (...args: EventArgs<T, K>) => void
+    ): void {
+        const _event = event as string;
+        if (!this._events[_event])
+            this._events[_event] = [];
+        this._events[_event].push(listener);
     }
 
     /**
      * Registers a one-time event listener
-     * @param {string} event - event name
+     * @param {K} event - event name
      * @param {Function} listener - function to be called once
      */
-    public once(event: string, listener: Function): void {
-        const onceListener = (...args: any[]) => {
+    public once<K extends EventName<T>>(
+        event: K,
+        listener: (...args: EventArgs<T, K>) => void
+    ): void {
+        const onceListener = (...args: EventArgs<T, K>) => {
             this.off(event, onceListener);
             listener(...args);
         };
@@ -27,34 +44,41 @@ export class VEE {
 
     /**
      * Removes an event listener.
-     * @param {string} event - event name
+     * @param {K} event - event name
      * @param {Function} listener - listener to remove
      */
-    public off(event: string, listener: Function): void {
-        if (!this._events[event]) return
-        this._events[event] = this._events[event].filter(l => l !== listener);
+    public off<K extends EventName<T>>(
+        event: K,
+        listener: (...args: EventArgs<T, K>) => void
+    ): void {
+        const _event = event as string;
+        if (!this._events[_event]) return;
+        this._events[_event] = this._events[_event].filter(l => l !== listener);
     }
 
     /**
      * Emits an event
-     * @param {string} event - event name
-     * @param {...any} args - arguments to be passed to listeners
+     * @param {K} event - event name
+     * @param {...EventArgs<T, K>} args - arguments to be passed to listeners
      */
-    public emit(event: string, ...args: any[]): void {
-        const listeners = this._events[event];
+    public emit<K extends EventName<T>>(
+        event: K,
+        ...args: EventArgs<T, K>
+    ): void {
+        const listeners = this._events[event as string];
         if (listeners && listeners.length > 0) {
             listeners.forEach(listener => {
-                listener(...args);
+                (listener as Function)(...args);
             });
         }
     }
 
     /**
      * Returns the number of listeners for the given event
-     * @param {string} event - event name
+     * @param {K} event - event name
      */
-    public listenerCount(event: string): number {
-        return this._events[event]?.length || 0;
+    public listenerCount<K extends EventName<T>>(event: K): number {
+        return this._events[event as string]?.length || 0;
     }
 }
 
