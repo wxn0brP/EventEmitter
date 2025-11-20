@@ -18,7 +18,7 @@ export class VEE<T extends EventMap = {}> {
      */
     public on<K extends EventName<T>>(
         event: K,
-        listener: (...args: EventArgs<T, K>) => void
+        listener: T[K]
     ): void {
         const _event = event as string;
         if (!this._events[_event])
@@ -33,9 +33,9 @@ export class VEE<T extends EventMap = {}> {
      */
     public once<K extends EventName<T>>(
         event: K,
-        listener: (...args: EventArgs<T, K>) => void
+        listener: T[K]
     ): void {
-        const onceListener = (...args: EventArgs<T, K>) => {
+        const onceListener: any = (...args: any[]) => {
             this.off(event, onceListener);
             listener(...args);
         };
@@ -49,7 +49,7 @@ export class VEE<T extends EventMap = {}> {
      */
     public off<K extends EventName<T>>(
         event: K,
-        listener: (...args: EventArgs<T, K>) => void
+        listener: T[K]
     ): void {
         const _event = event as string;
         if (!this._events[_event]) return;
