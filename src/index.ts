@@ -1,10 +1,10 @@
-type EventMap = {
+export type EventMap = {
     [event: string]: (...args: any[]) => void;
 };
 
-type EventName<T extends EventMap> = keyof T | (string & {});
+export type EventName<T extends EventMap> = keyof T | (string & {});
 
-type EventArgs<T extends EventMap, K extends EventName<T>> = K extends keyof T
+export type EventArgs<T extends EventMap, K extends EventName<T>> = K extends keyof T
     ? Parameters<T[K]>
     : any[];
 
