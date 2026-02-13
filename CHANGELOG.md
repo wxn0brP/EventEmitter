@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/wxn0brP/EventEmitter/compare/v0.0.4...v0.0.5) (2026-02-13)
+
+
+### Features
+
+* emit * ([9392860](https://github.com/wxn0brP/EventEmitter/commit/9392860262b2df7a5b18dcf50f58e0f1239fb9cf))
+
 ### [0.0.4](https://github.com/wxn0brP/EventEmitter/compare/v0.0.3...v0.0.4) (2025-11-20)
 
 
