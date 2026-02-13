@@ -54,6 +54,11 @@ emitter.emit('data', 42, new Date()); // Typescript suggests number and Date par
 
 // You can still emit events without strict type checking
 emitter.emit('unknown_event', 'any', 'data'); // This is still allowed at runtime
+
+// Catch-all event listener for all events
+emitter.on('*', (originalEvent, ...originalArgs) => {
+  console.log(`Received event "${originalEvent}":`, originalArgs);
+});
 ```
 
 ## API
@@ -77,6 +82,17 @@ Removes an event listener.
 ### `emit(event: string, ...args: any[]): void`
 
 Emits an event.
+
+### Catch-all Event Listener
+
+The special `*` event acts as a catch-all that receives all emitted events. When any event is emitted, it will also trigger listeners registered for the `*` event with the original event name as the first argument, followed by the original arguments.
+
+Example:
+```typescript
+emitter.on("*", (originalEvent, ...originalArgs) => {
+  console.log(`Caught event "${originalEvent}" with args:`, originalArgs);
+});
+```
 
 ### `listenerCount(event: string): number`
 
