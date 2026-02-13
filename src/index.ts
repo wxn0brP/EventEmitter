@@ -56,6 +56,12 @@ export class VEE<T extends EventMap = {}> {
         this._events[_event] = this._events[_event].filter(l => l !== listener);
     }
 
+    public _emit(event: string, ...args: any[]) {
+        const listeners = this._events[event];
+        if (!listeners?.length) return;
+        listeners.forEach(listener => listener(...args));
+    }
+
     /**
      * Emits an event
      * @param {K} event - event name
@@ -65,12 +71,8 @@ export class VEE<T extends EventMap = {}> {
         event: K,
         ...args: EventArgs<T, K>
     ): void {
-        const listeners = this._events[event as string];
-        if (listeners && listeners.length > 0) {
-            listeners.forEach(listener => {
-                (listener as Function)(...args);
-            });
-        }
+        this._emit(event as string, ...args);
+        this._emit("*", event as string, ...args);
     }
 
     /**
