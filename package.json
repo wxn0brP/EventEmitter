@@ -16,6 +16,7 @@
         "build": "tsc"
     },
     "devDependencies": {
+        "@wxn0brp/biome": "*",
         "typescript": "^5"
     },
     "files": [
