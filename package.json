@@ -17,7 +17,7 @@
     },
     "devDependencies": {
         "@wxn0brp/biome": "*",
-        "typescript": "^5"
+        "typescript": "^7"
     },
     "files": [
         "dist"
