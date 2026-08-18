@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://github.com/wxn0brP/EventEmitter/compare/v0.0.5...v0.0.6) (2026-08-18)
+
+
+### Features
+
+* improve api ([2e1ecc5](https://github.com/wxn0brP/EventEmitter/commit/2e1ecc55a10272a029dbd6543f58762fd8550d5a))
+
+
+### Bug Fixes
+
+* tsconfig ([76a9f89](https://github.com/wxn0brP/EventEmitter/commit/76a9f89aa23819b3e57a099dedb7fa4006217019))
+
 ### [0.0.5](https://github.com/wxn0brP/EventEmitter/compare/v0.0.4...v0.0.5) (2026-02-13)
 
 
