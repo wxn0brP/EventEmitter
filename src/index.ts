@@ -55,9 +55,24 @@ export class VEE<T extends EventMap = {}> {
 
 	public _emit(event: string, ...args: any[]) {
 		const listeners = this._events[event];
-		if (!listeners?.length) return this;
-		listeners.forEach(listener => listener(...args));
+		if (listeners?.length) listeners.forEach(listener => listener(...args));
+
+		for (const pattern in this._events) {
+			if (pattern === event) continue;
+			if (pattern.includes("*") && this._matchPattern(pattern, event)) {
+				this._events[pattern].forEach(listener => listener(event, ...args));
+			}
+		}
+
 		return this;
+	}
+
+	public _matchPattern(pattern: string, event: string) {
+		if (pattern === "*") return true;
+		const regex = new RegExp(
+			"^" + pattern.replace(/\./g, "\\.").replace(/\*/g, ".*") + "$",
+		);
+		return regex.test(event);
 	}
 
 	/**
@@ -67,7 +82,6 @@ export class VEE<T extends EventMap = {}> {
 	 */
 	public emit<K extends EventName<T>>(event: K, ...args: EventArgs<T, K>) {
 		this._emit(event as string, ...args);
-		this._emit("*", event as string, ...args);
 		return this;
 	}
 
