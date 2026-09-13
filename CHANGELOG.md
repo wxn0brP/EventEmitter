@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://github.com/wxn0brP/EventEmitter/compare/v0.0.6...v0.0.7) (2026-09-13)
+
+
+### Features
+
+* add tests ([df7389b](https://github.com/wxn0brP/EventEmitter/commit/df7389b7d71ea7449639495e67df36b1c7f7ec08))
+* wildcard ([8ed0d3a](https://github.com/wxn0brP/EventEmitter/commit/8ed0d3a7935c5357343a9e71ef2c92fd8f096d74))
+
 ### [0.0.6](https://github.com/wxn0brP/EventEmitter/compare/v0.0.5...v0.0.6) (2026-08-18)
 
 
