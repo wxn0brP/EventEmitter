@@ -19,7 +19,7 @@ export class VEE<T extends EventMap = {}> {
 	 * @param {K} event - event name
 	 * @param {Function} listener - function to be called when event occurs
 	 */
-	public on<K extends EventName<T>>(event: K, listener: T[K]) {
+	public on<K extends EventName<T>>(event: K, listener: T[K]): () => void {
 		const _event = event as string;
 
 		if (!this._events[_event]) this._events[_event] = [];
@@ -33,7 +33,7 @@ export class VEE<T extends EventMap = {}> {
 	 * @param {K} event - event name
 	 * @param {Function} listener - function to be called once
 	 */
-	public once<K extends EventName<T>>(event: K, listener: T[K]) {
+	public once<K extends EventName<T>>(event: K, listener: T[K]): () => void {
 		const onceListener: any = (...args: any[]) => {
 			this.off(event, onceListener);
 			listener(...args);
@@ -46,14 +46,14 @@ export class VEE<T extends EventMap = {}> {
 	 * @param {K} event - event name
 	 * @param {Function} listener - listener to remove
 	 */
-	public off<K extends EventName<T>>(event: K, listener: T[K]) {
+	public off<K extends EventName<T>>(event: K, listener: T[K]): this {
 		const _event = event as string;
 		if (!this._events[_event]) return this;
 		this._events[_event] = this._events[_event].filter(l => l !== listener);
 		return this;
 	}
 
-	public _emit(event: string, ...args: any[]) {
+	public _emit(event: string, ...args: any[]): this {
 		const listeners = this._events[event];
 		if (listeners?.length) listeners.forEach(listener => listener(...args));
 
@@ -67,7 +67,7 @@ export class VEE<T extends EventMap = {}> {
 		return this;
 	}
 
-	public _matchPattern(pattern: string, event: string) {
+	public _matchPattern(pattern: string, event: string): boolean {
 		if (pattern === "*") return true;
 		const regex = new RegExp(
 			"^" + pattern.replace(/\./g, "\\.").replace(/\*/g, ".*") + "$",
@@ -80,7 +80,10 @@ export class VEE<T extends EventMap = {}> {
 	 * @param {K} event - event name
 	 * @param {...EventArgs<T, K>} args - arguments to be passed to listeners
 	 */
-	public emit<K extends EventName<T>>(event: K, ...args: EventArgs<T, K>) {
+	public emit<K extends EventName<T>>(
+		event: K,
+		...args: EventArgs<T, K>
+	): this {
 		this._emit(event as string, ...args);
 		return this;
 	}
@@ -89,7 +92,7 @@ export class VEE<T extends EventMap = {}> {
 	 * Returns the number of listeners for the given event
 	 * @param {K} event - event name
 	 */
-	public listenerCount<K extends EventName<T>>(event: K) {
+	public listenerCount<K extends EventName<T>>(event: K): number {
 		return this._events[event as string]?.length || 0;
 	}
 }
