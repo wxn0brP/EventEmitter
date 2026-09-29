@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://github.com/wxn0brP/EventEmitter/compare/v0.0.7...v0.0.8) (2026-09-29)
+
+
+### Features
+
+* jsr ([348c5ba](https://github.com/wxn0brP/EventEmitter/commit/348c5bad2755fffcc58adeed60418eccbc000b88))
+* return types ([5f176ec](https://github.com/wxn0brP/EventEmitter/commit/5f176ec6b0501da81aed8d453489a3197e5d52b0))
+
+
+### Bug Fixes
+
+* jsr ([813d2df](https://github.com/wxn0brP/EventEmitter/commit/813d2dfcaca9e7da6eac52fff63b3cb20c41996e))
+
 ### [0.0.7](https://github.com/wxn0brP/EventEmitter/compare/v0.0.6...v0.0.7) (2026-09-13)
 
 
