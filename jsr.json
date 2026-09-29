@@ -5,6 +5,7 @@
 	"publish": {
 		"include": [
 			"src",
+			"README.md",
 			"LICENSE"
 		]
 	}
