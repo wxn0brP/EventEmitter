@@ -12,7 +12,11 @@ export type EventArgs<
 export class VEE<T extends EventMap = {}> {
 	public _events: {
 		[event: string]: Function[];
-	} = {};
+	} = Object.create(null);
+
+	private _bucket(event: string): Function[] | undefined {
+		return Object.hasOwn(this._events, event) ? this._events[event] : undefined;
+	}
 
 	/**
 	 * Registers an event listener
@@ -22,9 +26,9 @@ export class VEE<T extends EventMap = {}> {
 	public on<K extends EventName<T>>(event: K, listener: T[K]): () => void {
 		const _event = event as string;
 
-		if (!this._events[_event]) this._events[_event] = [];
+		const bucket = this._bucket(_event) ?? (this._events[_event] = []);
 
-		this._events[_event].push(listener);
+		bucket.push(listener);
 		return () => this.off(event, listener);
 	}
 
@@ -48,16 +52,17 @@ export class VEE<T extends EventMap = {}> {
 	 */
 	public off<K extends EventName<T>>(event: K, listener: T[K]): this {
 		const _event = event as string;
-		if (!this._events[_event]) return this;
-		this._events[_event] = this._events[_event].filter(l => l !== listener);
+		const bucket = this._bucket(_event);
+		if (!bucket) return this;
+		this._events[_event] = bucket.filter(l => l !== listener);
 		return this;
 	}
 
 	public _emit(event: string, ...args: any[]): this {
-		const listeners = this._events[event];
+		const listeners = this._bucket(event);
 		if (listeners?.length) listeners.forEach(listener => listener(...args));
 
-		for (const pattern in this._events) {
+		for (const pattern of Object.keys(this._events)) {
 			if (pattern === event) continue;
 			if (pattern.includes("*") && this._matchPattern(pattern, event)) {
 				this._events[pattern].forEach(listener => listener(event, ...args));
@@ -93,7 +98,7 @@ export class VEE<T extends EventMap = {}> {
 	 * @param {K} event - event name
 	 */
 	public listenerCount<K extends EventName<T>>(event: K): number {
-		return this._events[event as string]?.length || 0;
+		return this._bucket(event as string)?.length || 0;
 	}
 }
 
