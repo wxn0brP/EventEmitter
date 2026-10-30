@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.9](https://github.com/wxn0brP/EventEmitter/compare/v0.0.8...v0.0.9) (2026-10-30)
+
+
+### Bug Fixes
+
+* safe listener bucket lookup ([b331e31](https://github.com/wxn0brP/EventEmitter/commit/b331e3195a8f981da1e7c1b30296a5de431cf57b))
+
 ### [0.0.8](https://github.com/wxn0brP/EventEmitter/compare/v0.0.7...v0.0.8) (2026-09-29)
 
 
